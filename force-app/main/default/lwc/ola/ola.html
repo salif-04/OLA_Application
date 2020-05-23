@@ -1,0 +1,54 @@
+<template>
+    
+        <lightning-button label="Mini" onclick={openModal} value={carType}></lightning-button>
+        <lightning-button label="Micro" onclick={openModal} value={carType}></lightning-button>
+        <lightning-button label="Sedan" onclick={openModal} value={carType}></lightning-button>
+        
+        <template if:true={showModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Book Car</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-input label="Car Name" value={rec.Car_Name__c} onchange={handleCarNameChange}></lightning-input>
+                    <lightning-input label="Car Number" value={rec.Car_Number__c} onchange={handleCarNumberChange}></lightning-input>
+                    <lightning-input label="Driver Name" value={rec.Driver_Name__c} onchange={handleDriverNameChange}></lightning-input>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={book}>Save</button>
+                </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <lightning-card title="Bookings" icon-name="custom:custom63">
+            <div class="slds-m-around_medium">
+                <template if:true={bookings.data}>
+                        <template for:each={bookings.data} for:item="booking">
+                            <p key={booking.Id}>
+                                {booking.Car_Name__c}
+                                {booking.Car_Number__c}
+                                {booking.Car_Type__c}
+                                {booking.Driver_Name__c}
+                            </p>
+                        </template>
+                </template>
+                <template if:true={bookings.error}>
+                    <p>{bookings.error}</p>
+                </template>
+            </div>
+        </lightning-card>
+
+        
+        
+    
+</template>
